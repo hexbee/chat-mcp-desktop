@@ -2211,6 +2211,10 @@
                             if (lastTool && (!tool.id || lastTool.id == tool.id)) {
                                 const source = tool.function
                                 for (const key in source) {
+                                    // Determine if source[key] is null, skip if it is null
+                                    if (source[key] === null) {
+                                        continue;
+                                    }
                                     if (lastTool.function[key]) {
                                         lastTool.function[key] += source[key];
                                     } else {
