@@ -1,0 +1,42 @@
+name: Build Windows Package (Manual Trigger)
+
+# Allows you to run this workflow manually from the Actions tab
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    # Run on a Windows runner for native Windows build
+    runs-on: windows-latest
+
+    steps:
+      # 1. Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js environment (version 20 as specified)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm' # Enable caching for faster dependency installs
+
+      # 3. Install dependencies using npm ci (preferred for CI, uses package-lock.json)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Run the build and packaging script defined in package.json
+      #    'npm run build-app' executes 'tsc && electron-builder'
+      #    electron-builder will read package.json's 'build' section
+      #    and build the ZIP for Windows since we are on a Windows runner.
+      - name: Build and Package Windows App
+        run: npm run build-app
+
+      # 5. Upload the generated Windows ZIP package as an artifact
+      #    'artifacts' is the output directory specified in package.json
+      - name: Upload Windows ZIP package Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chat-mcp-desktop-windows-zip
+          path: artifacts/*.zip
+          if-no-files-found: error
