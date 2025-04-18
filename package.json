@@ -1,11 +1,8 @@
 {
-    "name": "aiql-desktop",
+    "name": "chat-mcp-desktop",
     "version": "1.0.0",
-    "author": {
-        "name": "AIQL",
-        "email": "contact@aiql.com"
-    },
-    "description": "MCP Chat Desktop by AIQL.com",
+    "author": "",
+    "description": "Chat MCP Desktop",
     "main": "dist/main/main.js",
     "type": "module",
     "scripts": {
@@ -14,7 +11,7 @@
         "build-app": "npm run build && electron-builder"
     },
     "build": {
-        "appId": "com.aiql.chat-mcp",
+        "appId": "com.example.chat-mcp-desktop",
         "directories": {
             "output": "artifacts"
         },
@@ -28,24 +25,8 @@
             }
         ],
         "win": {
-            "target": "nsis",
+            "target": "zip",
             "icon": "icon.ico"
-        },
-        "mac": {
-            "target": "dmg",
-            "icon": "icon.icns"
-        },
-        "linux": {
-            "target": [
-                "AppImage",
-                "deb",
-                "rpm"
-            ],
-            "icon": "icon.png"
-        },
-        "nsis": {
-            "oneClick": false,
-            "allowToChangeInstallationDirectory": true
         }
     },
     "devDependencies": {
